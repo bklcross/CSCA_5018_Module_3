@@ -27,8 +27,11 @@ fun main(): Unit = runBlocking {
     )
 
     val fakeEmailServer = fakeEmailServer(port, benchmark).apply { start() }
-    benchmark.start(this)
-    fakeEmailServer.stop()
+    try {
+        benchmark.start(this)
+    } finally {
+        fakeEmailServer.stop()
+    }
 }
 
 private fun getEnvInt(name: String, default: Int): Int = System.getenv(name)?.toInt() ?: default

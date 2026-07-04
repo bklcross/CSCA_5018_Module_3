@@ -49,6 +49,12 @@ class Benchmark(
         }.also { duration ->
             stop()
             logger.info("benchmark finished in $duration")
+            val registrationsPerSecond = registrationCount / (duration.inWholeMilliseconds / 1000.0)
+            if (registrationsPerSecond < 50) {
+                val message = "benchmark failed: expected at least 50 registrations per second, got ${String.format("%.2f", registrationsPerSecond)}"
+                System.err.println("ERROR: $message")
+                error(message)
+            }
         }
     }
 

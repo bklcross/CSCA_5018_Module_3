@@ -1,0 +1,4 @@
+.gradle/
+build/
+.docker-data/
+.DS_Store
